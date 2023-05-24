@@ -1,3 +1,4 @@
+
 // this file will contain all the functions that will be used to create the CRUD operations for the User model.
 // this file will need to contain the following controller methods: 
 // // getAllUsers

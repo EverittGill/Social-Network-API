@@ -6,6 +6,10 @@
 // // updateThought 
 // // deleteThought
 
+// this file will also contain the following controller methods for the reaction model:
+// post to create a reaction stored in a single thought's reactions array field
+// delete to pull and remove a reaction by the reaction's reactionId value
+// those will be stored under /api/thoughts/:thoughtId/reactions
 
 const { Thought, User } = require('../models');
 
