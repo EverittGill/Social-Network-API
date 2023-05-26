@@ -50,3 +50,5 @@ const usersData = [
     }
   ];
   
+
+// Function to seed the data

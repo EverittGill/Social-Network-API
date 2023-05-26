@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Thought = require('../models/thought');
 const User = require('../models/user');
+const thoughtData = require('../seeds/thoughtData.json');
+const userData = require('../seeds/userData');
+
 
 const connectionString = 'mongodb://127.0.0.1:27017/social-network-api';
 
@@ -18,17 +21,17 @@ const seedData = async () => {
     await User.deleteMany();
 
     // Create thoughts
-    const thoughts = await Thought.insertMany(thoughtsData);
+    const thoughtData = await Thought.insertMany(thoughtData);
 
     // Create users
-    const users = await User.insertMany(usersData);
+    const userData = await User.insertMany(userData);
 
     // Assign thoughts to users
-    for (let i = 0; i < users.length; i++) {
-      const user = users[i];
-      user.thoughts = [thoughts[i]._id];
-      await user.save();
-    }
+    // for (let i = 0; i < users.length; i++) {
+    //   const user = users[i];
+    //   user.thoughts = [thoughts[i]._id];
+    //   await user.save();
+    // }
 
     console.log('Seed data created successfully');
   } catch (error) {
@@ -38,10 +41,10 @@ const seedData = async () => {
   }
 };
 
-if (process.argv[2] === 'seed') {
-  const thoughtsData = []; 
-  const usersData = []; 
+// if (process.argv[2] === 'seed') {
+//   const thoughtsData = []; 
+//   const usersData = []; 
 
 
   seedData();
-}
+// }

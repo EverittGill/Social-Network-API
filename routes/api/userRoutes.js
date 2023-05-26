@@ -31,17 +31,19 @@
 
 const router = require('express').Router();
 
-// const {
+const {
 //     getUsers,
 //     getSingleUser,
-//     createUser,
+    createUser,
 //     updateUser,
 //     deleteUser,
 //     addFriend,
 //     removeFriend,
-// } = require('../../controllers/userController');
-// // /api/users
-// router.route('/').get(getUsers).post(createUser);
+} = require('../../controllers/userController');
+
+
+// /api/users
+router.route('/').get().post(createUser);
 
 
 module.exports = router;
