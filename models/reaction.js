@@ -7,6 +7,7 @@
 
 const { Schema, model } = require('mongoose');
 // const dateFormat = require('../utils/dateFormat');
+// const reactionSchema = require('../models/reaction');
 
 const reactionSchema = new Schema(
     {
@@ -35,6 +36,7 @@ const reactionSchema = new Schema(
         }
     }
 );
+
 
 
 module.exports = reactionSchema;

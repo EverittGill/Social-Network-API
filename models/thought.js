@@ -8,7 +8,8 @@
 
 const { Schema, model } = require('mongoose');
 // const dateFormat = require('../utils/dateFormat');
-const reactionSchema = require('./Reaction');
+// const thoughtSchema = require('../models/thought');
+const reactionSchema = require('../models/reaction');
 
 const thoughtSchema = new Schema(
     {

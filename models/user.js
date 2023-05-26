@@ -7,7 +7,7 @@
 // this file also needs to contain a virtual called friendCount that retrieves the length of the user's friends array field on query.
 const { Schema, model } = require('mongoose');
 // const dateFormat = require('../utils/dateFormat');
-const reactionSchema = require('./Reaction');
+// const userSchema = require('../models/user');
 
 
 const userSchema = new Schema(
