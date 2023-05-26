@@ -7,7 +7,7 @@
 // this file also needs to contain a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+// const dateFormat = require('../utils/dateFormat');
 const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
@@ -21,7 +21,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAtVal) => dateFormat(createdAtVal)
+            // get: (createdAtVal) => dateFormat(createdAtVal)
         },
         username: {
             type: String,
