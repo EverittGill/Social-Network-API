@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 const Thought = require('../models/Thought');
 
-// Assuming you have established the MongoDB connection already
 
-// Define an array of objects representing the data to seed
 const thoughtsData = [
   {
     thoughtText: 'First thought',
@@ -49,17 +47,14 @@ const thoughtsData = [
 // Function to seed the data
 async function seedData() {
   try {
-    // Clear the existing thoughts collection
     await Thought.deleteMany();
 
-    // Insert the seed data into the database
     await Thought.insertMany(thoughtsData);
 
     console.log('Data seeded successfully');
   } catch (error) {
     console.error('Error seeding data:', error);
   } finally {
-    // Close the MongoDB connection
     mongoose.connection.close();
   }
 }
