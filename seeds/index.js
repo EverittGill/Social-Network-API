@@ -2,17 +2,16 @@ const mongoose = require('mongoose');
 const Thought = require('../models/thought');
 const User = require('../models/user');
 
-// Replace with your MongoDB connection string
 const connectionString = 'mongodb://127.0.0.1:27017/social-network-api';
 
 // Connect to MongoDB
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: false,
-  useFindAndModify: false
+//   useCreateIndex: false,
+//   useFindAndModify: false
 });
-r
+
 const seedData = async () => {
   try {
     await Thought.deleteMany();
