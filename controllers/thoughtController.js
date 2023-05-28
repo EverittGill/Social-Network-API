@@ -12,6 +12,7 @@
 // those will be stored under /api/thoughts/:thoughtId/reactions
 
 const { Thought, User } = require('../models');
+const {Types} = require("mongoose");
 
 module.exports = {
     // get all thoughts
@@ -27,11 +28,33 @@ module.exports = {
     // get one thought by id
 
 
-    // createThought
+    // createThought that is attached to a user
+    createThought(req, res) {
+        console.log(req.body.id)
+        Thought.create(req.body)
+        .then((dbThoughtData) => {
+            return User.findOneAndUpdate(
+                { _id: req.body.id, username: req.body.username },
+                { $addToSet: { thoughts: dbThoughtData._id } },
+                { new: true }
+                
+            );
+        })
+        .then((dbUserData) => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id!' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+
+    },
+
+
 
 
     // update thought by id
-
+        
 
     // delete thought by id
 }

@@ -26,12 +26,7 @@ const seedData = async () => {
     // Create users
     const userData = await User.insertMany(userData);
 
-    // Assign thoughts to users
-    // for (let i = 0; i < users.length; i++) {
-    //   const user = users[i];
-    //   user.thoughts = [thoughts[i]._id];
-    //   await user.save();
-    // }
+  
 
     console.log('Seed data created successfully');
   } catch (error) {

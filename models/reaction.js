@@ -5,7 +5,7 @@
 // this file will need to contain a field for createdAt set to a date, and default to the current timestamp and have a getter method to format the timestamp on query
 
 
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 // const dateFormat = require('../utils/dateFormat');
 // const reactionSchema = require('../models/reaction');
 
