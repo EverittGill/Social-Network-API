@@ -89,12 +89,13 @@ const {Types} = require("mongoose");
     // update thought by id
     async function updateThought(req, res) {
         try {
-            const thoughtData = await Thought.findOneAndUpdate(req.params.id, req, body.id, {
+            console.log(req.params._id)
+            const thoughtData = await Thought.findByIdAndUpdate(req.params._id, req.body, {
                 new: true
             });
             res.status(200).json(thoughtData);
         } catch (err) {
-            res.status(500).json(err);
+            res.status(500, err).json(err);
         }   
     }
 
@@ -103,4 +104,5 @@ const {Types} = require("mongoose");
 
 
 
-module.exports = { getAllThoughts, getThoughtById, createThought, updateThought }
+
+module.exports = { getAllThoughts, getThoughtById, createThought, updateThought,}

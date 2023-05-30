@@ -24,8 +24,9 @@ function getUsers(req, res) {
 
 // getSingleUser by their _id and populated thought and friend data
 function getSingleUser(req, res) {
+  const { objectId } = require('mongoose').Types;
   console.log(req.params.id)
-  User.findOne({ _id: req.params.id })
+  User.findOne({ _id: objectId(req.params.id) })
   .select('-__v')
   .then((user) =>
   !user
@@ -47,11 +48,7 @@ function createUser(req, res) {
 // create a function to update a user by their _id
 async function updateUser(req, res) {
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: req.params.id },
-        req.body,
-        { new: true }
-      );
+      const user = await User.findOneAndUpdate({ id: req.params.id}, req.body, { new: true });
       if (!user) {
         res.status(404).json({ message: 'no user found with this id' });
         return;
@@ -63,9 +60,27 @@ async function updateUser(req, res) {
     }
   }
 
+async function deleteUser(req, res) {
+    try {
+      const user = await User.findOneAndDelete({ _id: req.params.id });
+      if (!user) {
+        res.status(404).json({ message: 'no user found with this id' });
+        return;
+      }
+      res.json(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }
+
+// function to add a friend to a user's friend list
+
+// function to remove a friend from a user's friend list
 
 
-module.exports = { getUsers, getSingleUser, createUser, updateUser}
+
+module.exports = { getUsers, getSingleUser, createUser, updateUser, deleteUser}
 
 
 
