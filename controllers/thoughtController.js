@@ -65,24 +65,23 @@ const {Types} = require("mongoose");
     async function createThought(req, res) {
         try {
             const newThought = await Thought.create(req.body);
-            console.log(newThought)
+            console.log(newThought);
             const updatedUser = await User.findOneAndUpdate(
                 { _id: req.body.userId },
-                { $addToSet: { thoughts: newThought._id } },
+                { $push: { thoughts: newThought._id } },
                 { new: true }
             );
-            console.log(updatedUser)
-            if (!user) {
+            console.log(updatedUser);
+            if (!updatedUser) {
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
-            res.status(200).json({ updatedUser, newThought });
+            res.status(200).json(updatedUser);
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
-        
         }
-
     }
+    
 
 
 
@@ -100,6 +99,8 @@ const {Types} = require("mongoose");
     }
 
     // delete thought by id
+    
+
 
 
 module.exports = { getAllThoughts, getThoughtById, createThought, updateThought }
