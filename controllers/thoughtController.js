@@ -14,47 +14,92 @@
 const { Thought, User } = require('../models');
 const {Types} = require("mongoose");
 
-module.exports = {
+
     // get all thoughts
-    getAllThoughts(req, res) {
+   function getAllThoughts(req, res) {
         Thought.find({})
         .then((dbThoughtData) => res.json(dbThoughtData))
         .catch((err) => {
             console.log(err);
             res.status(400).json(err);
         });
-    },
+    }
 
     // get one thought by id
+    function getThoughtById(req, res) {
+        console.log(req.params.id)
+        Thought.findOne({ _id: req.params.id })
+        .select('-__v')
+        .then((dbThoughtData) => {
+            if (!dbThoughtData) {
+                res.status(404).json({ message: 'No thought found with this id!' });
+                return;
+            }
+            res.json(dbThoughtData);
+        }
+        )
+ 
+    }
 
 
     // createThought that is attached to a user
-    createThought(req, res) {
-        console.log(req.body.id)
-        Thought.create(req.body)
-        .then((dbThoughtData) => {
-            return User.findOneAndUpdate(
-                { _id: req.body.id, username: req.body.username },
-                { $addToSet: { thoughts: dbThoughtData._id } },
-                { new: true }
+    // createThought(req, res) {
+    //     console.log(req.body.id)
+    //     Thought.create(req.body)
+    //     .then((dbThoughtData) => {
+    //         return User.findOneAndUpdate(
+    //             { _id: req.body.id, username: req.body.username },
+    //             { $addToSet: { thoughts: dbThoughtData._id } },
+    //             { new: true }
                 
+    //         );
+    //     })
+    //     .then((dbUserData) => {
+    //         if (!dbUserData) {
+    //             res.status(404).json({ message: 'No user found with this id!' });
+    //             return;
+    //         }
+    //         res.json(dbUserData);
+    //     })
+        
+    async function createThought(req, res) {
+        try {
+            const newThought = await Thought.create(req.body);
+            console.log(newThought)
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: req.body.userId },
+                { $addToSet: { thoughtText: newThought._id } },
+                { new: true }
             );
-        })
-        .then((dbUserData) => {
-            if (!dbUserData) {
-                res.status(404).json({ message: 'No user found with this id!' });
-                return;
+            console.log(updatedUser)
+            if (!user) {
+                return res.status(404).json({ message: 'No user found with this id!' });
             }
-            res.json(dbUserData);
-        })
+            res.status(200).json({ updatedUser, newThought });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        
+        }
 
-    },
+    }
 
 
 
 
     // update thought by id
-        
+    async function updateThought(req, res) {
+        try {
+            const thoughtData = await Thought.findOneAndUpdate(req.params.id, req, body.id, {
+                new: true
+            });
+            res.status(200).json(thoughtData);
+        } catch (err) {
+            res.status(500).json(err);
+        }   
+    }
 
     // delete thought by id
-}
+
+
+module.exports = { getAllThoughts, getThoughtById, createThought, updateThought }
