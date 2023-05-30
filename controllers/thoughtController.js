@@ -87,22 +87,72 @@ const {Types} = require("mongoose");
 
 
     // update thought by id
+    // async function updateThought(req, res) {
+    //     try {
+    //         console.log(req.params._id)
+    //         const thoughtData = await Thought.findByIdAndUpdate(req.params._id, req.body, {
+    //             new: true
+    //         });
+    //         res.status(200).json(thoughtData);
+    //     } catch (err) {
+    //         res.status(500, err).json(err);
+    //     }   
+    // }
+
     async function updateThought(req, res) {
         try {
-            console.log(req.params._id)
-            const thoughtData = await Thought.findByIdAndUpdate(req.params._id, req.body, {
-                new: true
-            });
-            res.status(200).json(thoughtData);
+            const updatedThought = await Thought.findOneAndUpdate(
+                { _id: req.params.id },
+                { $set: req.body },
+                { new: true }
+            );
+            if (!updatedThought) {
+                return res.status(404).json({ message: 'No thought found with this id!' });
+            }
+            res.status(200).json(updatedThought);
         } catch (err) {
-            res.status(500, err).json(err);
-        }   
+            console.log(err);
+            res.status(500).json(err);
+        } 
     }
+
 
     // delete thought by id
     
+    ///api/thoughts/:thoughtId/reactions
+
+    // post reaction by id 
+        // add in as reactions: req.body
+    async function postReaction(req, res) {
+        try {
+        const newReaction = await Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body }},
+            { new: true }
+        );
+        res.status(200).json(newReaction);
+    } catch (err) {
+        res.status(500).json(err)
+    }};
+
+    // delete reaction by id
+
+    async function deleteReaction (req, res) {
+        try  {
+            const droppedReaction = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: { _id: req.params.reactionId } }},
+                { new: true }
+            );
+            res.status(200).json(droppedReaction)
+            } catch (err) {
+            res.status(500).json(err)
+    }
+}
+
+    // { _id: req.params.reactionId },
+    //{ $addToSet: { reactions: req.body }},
+    //{ new: true }
 
 
-
-
-module.exports = { getAllThoughts, getThoughtById, createThought, updateThought,}
+module.exports = { getAllThoughts, getThoughtById, createThought, updateThought, postReaction, deleteReaction }
