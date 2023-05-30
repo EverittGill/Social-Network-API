@@ -68,7 +68,7 @@ const {Types} = require("mongoose");
             console.log(newThought)
             const updatedUser = await User.findOneAndUpdate(
                 { _id: req.body.userId },
-                { $addToSet: { thoughtText: newThought._id } },
+                { $addToSet: { thoughts: newThought._id } },
                 { new: true }
             );
             console.log(updatedUser)
