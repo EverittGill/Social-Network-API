@@ -118,6 +118,19 @@ const {Types} = require("mongoose");
 
 
     // delete thought by id
+    async function deleteThought(req, res) {
+        try {
+            const deletedThought = await Thought.findOneAndDelete({ _id: req.params.id });
+            if (!deletedThought) {
+                return res.status(404).json({ message: 'No thought found with this id!' });
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    }
+
+    
     
     ///api/thoughts/:thoughtId/reactions
 
@@ -155,4 +168,4 @@ const {Types} = require("mongoose");
     //{ new: true }
 
 
-module.exports = { getAllThoughts, getThoughtById, createThought, updateThought, postReaction, deleteReaction }
+module.exports = { getAllThoughts, getThoughtById, createThought, updateThought, deleteThought, postReaction, deleteReaction }
