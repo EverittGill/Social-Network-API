@@ -18,7 +18,11 @@ To install this just clone the repository and run "npm i"
 
 To start the server just run "npm run start" in the root directory.
 
-For reference, this is what your first Post request should look like. You'll need to use this format to get started by posting your first userl
+For reference, this is what your first Post request should look like. You'll need to use this format to get started by posting your first user.
+
+Follow this link for a full tutorial
+
+https://watch.screencastify.com/v/93Hlh7bUqx9qCqma6jbc
 
     ```md
 ![first-post-setup](assets/images/Social_Media_API.png)
