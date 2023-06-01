@@ -26,7 +26,8 @@ function getUsers(req, res) {
 function getSingleUser(req, res) {
   const { objectId } = require('mongoose').Types;
   console.log(req.params.id)
-  User.findOne({ _id: objectId(req.params.id) })
+  // User.findOne({ _id: objectId(req.params.id) })
+  User.findOne({ _id: req.params.id })
   .select('-__v')
   .then((user) =>
   !user
@@ -48,7 +49,9 @@ function createUser(req, res) {
 // create a function to update a user by their _id
 async function updateUser(req, res) {
     try {
-      const user = await User.findOneAndUpdate({ id: req.params.id}, req.body, { new: true });
+      const user = await User.findOneAndUpdate({ _id: req.params.id}, req.body, { new: true });
+      console.log(req.params.id)
+
       if (!user) {
         res.status(404).json({ message: 'no user found with this id' });
         return;

@@ -124,6 +124,7 @@ const {Types} = require("mongoose");
             if (!deletedThought) {
                 return res.status(404).json({ message: 'No thought found with this id!' });
             }
+            res.json({ message: 'Thought successfully deleted' });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
